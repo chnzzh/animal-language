@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="zhihancn(chnzzh@outlook.com)">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
+
+    <title>动物语翻译器</title>
+
+    <script src="alcore.js"></script>
+    <script>
+        var translater = new ALTranslater(['喵', '汪', '哞', '咩', '呱', '嗷呜', '叽', '嘎', '👽'], 'utf-8');
+        function encode_button() {
+            let enStr = document.getElementById("encode_area").value;
+            document.getElementById("decode_area").value = translater.encode(enStr);
+        }
+        function decode_button() {
+            let deStr = document.getElementById("decode_area").value;
+            document.getElementById("encode_area").value = translater.decode(deStr);
+        }
+	</script>
+
+
+</head>
+
+<body class="bg-light">
+    <!-- Navigation-->
+    <header class="bd-header py-3 d-flex align-items-stretch border-bottom border-5", style="background-color: #e3f2fd;">
+        <div class="container-fluid d-flex align-items-center">
+            <h1 class="d-flex align-items-center fs-4 fw-bold mb-0">动物语翻译器</h1>
+        </div>
+    </header>
+
+    <section class="m-2">
+        <label>加密信息</label>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="encode_area" style="height: 250px"></textarea>
+
+    </section>
+    <section class="m-2">
+        <label>解密信息</label>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="decode_area" style="height: 250px"></textarea>
+        </div>
+    </section>
+
+    <section class="m-4">
+        <button type="button" class="btn btn-outline-success" onclick="encode_button()">点我加密</button>
+        <button type="button" class="btn btn-outline-danger " onclick="decode_button()">点我解密</button>
+    </section>
+
+
+</body>
+
+</html>
