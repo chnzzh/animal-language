@@ -3,6 +3,8 @@ name = "animal-language"
 version = "0.1.0"
 description = "Customize a word set, and then use the words in this set to represent any sentence."
 authors = ["chnzzh <chnzzh@outlook.com>"]
+readme = "README.md"
+repository = "https://github.com/chnzzh/animal-language"
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -14,20 +16,5 @@ pytest = "^5.2"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[project]
-name = "animal_language"
-version = "0.0.1"
-authors = [
-  { name="zhihancn", email="zhihancn@outlook.com" },
-]
-description = "Customize a word set, and then use the words in this set to represent any sentence."
-readme = "README.md"
-requires-python = ">=3.6"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-]
-
-[project.urls]
-"Homepage" = "https://github.com/chnzzh/animal-language"
+[tool.poetry.urls]
 "Bug Tracker" = "https://github.com/chnzzh/animal-language/issues"

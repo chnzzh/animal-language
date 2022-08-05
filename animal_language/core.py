@@ -56,7 +56,7 @@ class ALTranslater:
             words = ['b', 'aa']
 
         self.encode_type = encode
-        self.words = words
+        self.words = [str(i) for i in words]
 
         self.__pre_treat()
         self.base = len(self.words)
@@ -75,6 +75,12 @@ class ALTranslater:
 
         if len(self.words) < 2:
             raise Exception("Words smaller than 2!")
+
+    def set_words(self, words: list = None):
+        self.__init__(words=words)
+
+    def set_encode(self, encode: str = 'utf-8'):
+        self.__init__(encode=encode)
 
     def encode(self, str_in: str) -> str:
         """
