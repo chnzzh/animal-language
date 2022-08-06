@@ -8,7 +8,7 @@ function int_to_anybase(decNum, base) {
         remainder = decNum % BigInt(base);
         rtList.push(Number(remainder));
         decNum = decNum / BigInt(base);
-        if (decNum==0){
+        if (decNum == 0) {
             break;
         }
     }
@@ -22,7 +22,7 @@ function anybase_to_int(anybaseList, base) {
     let decNum = BigInt(0);
     let b = BigInt(1);
 
-    for (let i=0; i<anybaseList.length; i++) {
+    for (let i = 0; i < anybaseList.length; i++) {
         decNum = decNum + BigInt(anybaseList[i]) * b;
         b = b * BigInt(base);
     }
@@ -30,9 +30,8 @@ function anybase_to_int(anybaseList, base) {
 }
 
 class ALTranslater {
-    constructor(words, encode) {
+    constructor(words) {
         this.words = words;
-        this.encode_type = encode;
         this.__pre_treat()
         console.log(this.words)
     }
@@ -44,35 +43,35 @@ class ALTranslater {
 
     encode(oriStr) {
         // byte to hex
-        let encoder = new TextEncoder(this.encode_type);
+        let encoder = new TextEncoder();
         let byteList = encoder.encode(oriStr);
         let byteStrList = new Array(byteList.length);
         byteList.forEach(toHex);
+
         function toHex(value, index) {
-            byteStrList[index] = value.toString(16).padStart(2,'0');
+            byteStrList[index] = value.toString(16).padStart(2, '0');
         }
+
         let byteStr = byteStrList.join('');
         // hex to int
-        let intStr = BigInt('0x'+byteStr);
+        let intStr = BigInt('0x' + byteStr);
         // int to anybase
         let anybaseList = int_to_anybase(intStr, this.words.length);
         // anybase to encoded str
         let encodedList = new Array(anybaseList.length);
-        for(let i=0; i<anybaseList.length; i++) {
+        for (let i = 0; i < anybaseList.length; i++) {
             encodedList[i] = this.words[anybaseList[i]];
         }
 
-        let encoded_str = encodedList.join('');
-
-        return encoded_str;
+        return encodedList.join('');
     }
 
     decode(encodedStr) {
         // encoded str to anybase list
         let anybaseStr = encodedStr;
 
-        for (let i=this.words.length-1; i>=0; i--) {
-            let regex = new RegExp('(?<!\0)' + this.words[i],'g');
+        for (let i = this.words.length - 1; i >= 0; i--) {
+            let regex = new RegExp('(?<!\0)' + this.words[i], 'g');
             anybaseStr = anybaseStr.replace(regex, '\0' + i.toString());
         }
         let anybaseList = anybaseStr.split('\0').slice(1).map(Number);
@@ -83,20 +82,7 @@ class ALTranslater {
         // int to hex
         let byteStr = intStr.toString(16);
 
-        // hex to byte list
-
-        let byteStrList = byteStr.match(/.{1,2}/g);
-
-        let byteList = new Uint8Array(byteStrList.length);
-        byteStrList.forEach(toInt);
-        function toInt(value, index) {
-            byteList[index] = parseInt(value, 16);
-        }
-
-        // byte list to original str
-        let decoder = new TextDecoder(this.encode_type);
-        let oriStr = decoder.decode(byteList);
-
-        return oriStr;
+        // hex to oriStr
+        return decodeURIComponent('%' + byteStr.match(/.{1,2}/g).join('%'));
     }
 }
