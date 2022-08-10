@@ -2,6 +2,10 @@
 
 Customize a word set, and then use the words in this set to represent any sentence.
 
+Also provide a JavaScript version to play online. See [动物语翻译器](https://chnzzh.github.io/animal-language). 
+
+JS code in [docs/alcore.js](./docs/alcore.js)
+
 ## Install
 
 ```

@@ -68,16 +68,32 @@ class ALTranslater {
 
     decode(encodedStr) {
         // encoded str to anybase list
-        let anybaseStr = encodedStr;
+        let anybaseStrList = [encodedStr];
 
         for (let i = this.words.length - 1; i >= 0; i--) {
-            let regex = new RegExp('(?<!\0)' + this.words[i], 'g');
-            anybaseStr = anybaseStr.replace(regex, '\0' + i.toString());
-        }
-        let anybaseList = anybaseStr.split('\0').slice(1).map(Number);
+            for (let j = 0; j < anybaseStrList.length; j++) {
+                if (typeof anybaseStrList[j] == 'number') {
+                    anybaseStrList[j] = [anybaseStrList[j]];
+                } else {
+                    let word = this.words[i]
+                    let regex = new RegExp('(' + word + ')', 'g');
 
-        // anybase to int
-        let intStr = anybase_to_int(anybaseList, this.words.length)
+                    anybaseStrList[j] = anybaseStrList[j].split(regex).filter(i => i != '');
+
+                    anybaseStrList[j].forEach(toNum);
+
+                    function toNum(value, index) {
+                        if (value == word) {
+                            anybaseStrList[j][index] = i;
+                        }
+                    }
+                }
+            }
+            anybaseStrList = anybaseStrList.flat();
+        }
+
+        // anybase list to int
+        let intStr = anybase_to_int(anybaseStrList, this.words.length)
 
         // int to hex
         let byteStr = intStr.toString(16);

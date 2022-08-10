@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "animal-language"
-version = "0.1.1"
+version = "0.1.2"
 description = "Customize a word set, and then use the words in this set to represent any sentence."
 authors = ["chnzzh <chnzzh@outlook.com>"]
 readme = "README.md"

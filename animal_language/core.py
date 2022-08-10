@@ -117,12 +117,15 @@ class ALTranslater:
         map_rvs = self.map.copy()
         map_rvs.reverse()
 
-        # 将自定义字符替换为map对应的数字，用\x00间隔
+        str_base = [str_in]
         for i in map_rvs:
-            str_in = re.sub('(?<![\x00])%s' % self.words[i], '\x00%s' % i, str_in)
-
-        # split 字符串
-        str_base = [int(i) for i in (re.split('\x00', str_in)[1:])]
+            for j in range(len(str_base)):
+                if isinstance(str_base[j], int):
+                    str_base[j] = [str_base[j]]
+                else:
+                    str_base[j] = [item for item in re.split(r'(%s)' % self.words[i], str_base[j]) if item]     # 去掉空字符串
+                    str_base[j] = [i if item == self.words[i] else item for item in str_base[j]]                # 替换为数字
+            str_base = [element for sublist in str_base for element in sublist]
 
         # len(words)进制转为10进制
         str_i = anybase_to_int(str_base, self.base)
